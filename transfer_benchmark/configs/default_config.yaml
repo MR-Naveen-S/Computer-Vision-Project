@@ -1,0 +1,50 @@
+# Configuration for Transfer Learning Empirical Benchmark
+
+experiment:
+  name: "transfer_learning_empirical_benchmark"
+  seed: 42
+  results_dir: "./results"
+  data_cache_dir: "./data_cache"
+
+training:
+  epochs: 10
+  batch_size: 64
+  num_workers: 0  # 0 is safest across Windows multiprocessing
+  lr: 0.001
+  backbone_lr: 0.0001      # Differential LR for backbone in full_finetune
+  classifier_lr: 0.001     # Differential LR for classification head
+  weight_decay: 0.0001
+  device: "auto"           # "auto", "cuda", or "cpu"
+  mixed_precision: true    # Enable amp.autocast when GPU is available
+  max_train_samples: null  # Optional subsampling for rapid prototyping (e.g. 2000)
+  max_test_samples: null   # Optional subsampling for rapid evaluation (e.g. 1000)
+
+matrix:
+  datasets:
+    - name: "cifar10"
+      domain: "near"
+      description: "CIFAR-10 Natural Photographic Images (Close to ImageNet)"
+    - name: "pathmnist"
+      domain: "far"
+      description: "PathMNIST Histological Colon Pathology Slices (Out-of-Distribution)"
+
+  models:
+    - "resnet50"
+    - "efficientnet_b0"
+    - "mobilenet_v2"
+
+  strategies:
+    - "scratch"
+    - "feature_extraction"
+    - "partial_finetune"
+    - "full_finetune"
+
+cka:
+  sample_size: 1000
+  target_model: "resnet50"
+  target_layers:
+    - "conv1"
+    - "layer1"
+    - "layer2"
+    - "layer3"
+    - "layer4"

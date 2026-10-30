@@ -1,0 +1,32 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# PyTorch checkpoints and model weights
+*.pt
+*.pth
+*.ckpt
+checkpoints/
+**/checkpoints/
+
+# Dataset caches and raw archive files (exceeding GitHub limits)
+data_cache/
+**/data_cache/
+*.npz
+*.tar.gz
+*.tar
+*.zip
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# IDE & OS files
+.vscode/
+.idea/
+*.swp
+*.swo
+Thumbs.db
+.DS_Store
