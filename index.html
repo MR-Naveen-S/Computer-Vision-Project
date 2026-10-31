@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Transfer Learning Benchmark Dashboard | KPRIET Computer Vision</title>
+  
+  <!-- Modern Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Chart.js 4.4 via CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+
+  <!-- Dashboard Custom Stylesheet -->
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+
+  <!-- ========================================================================
+       Top Navigation Bar
+       ======================================================================== -->
+  <header class="header-nav">
+    <div class="container nav-wrapper">
+      <div class="nav-brand">
+        <div class="brand-logo-icon">TL</div>
+        <div class="brand-text">
+          <h1>Transfer Learning Empirical Benchmark</h1>
+          <span>U21CS503 Computer Vision &bull; KPRIET</span>
+        </div>
+      </div>
+
+      <nav class="nav-actions">
+        <ul class="nav-links">
+          <li><a href="#overview" class="nav-link active">Overview</a></li>
+          <li><a href="#benchmark-charts" class="nav-link">Analytics</a></li>
+          <li><a href="#cka-drift" class="nav-link">CKA Drift</a></li>
+          <li><a href="#comparison-table" class="nav-link">Matrix Table</a></li>
+          <li><a href="#decision-wizard" class="nav-link">Strategy Wizard</a></li>
+          <li><a href="#diagrams-gallery" class="nav-link">Architecture</a></li>
+        </ul>
+
+        <!-- Theme Toggle Button -->
+        <button class="btn-icon" id="themeToggleBtn" title="Toggle Light / Dark Mode" aria-label="Toggle Theme">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+        </button>
+
+        <!-- View PDF Report Link -->
+        <a href="CV_PROJECT_REPORT.pdf" target="_blank" class="btn btn-primary" title="Open 34-Page Institutional Report PDF">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+            <polyline points="10 9 9 9 8 9"></polyline>
+          </svg>
+          Report PDF (34p)
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ========================================================================
+       Hero Section & Academic Notice
+       ======================================================================== -->
+  <main class="container">
+    <section class="hero-section" id="overview">
+      <div class="academic-badge">
+        <span class="pulse-dot"></span>
+        <span>Empirical Benchmark Completed &bull; 24 Configurations Evaluated</span>
+      </div>
+
+      <h2 class="hero-title">
+        Transfer Learning for Image Classification: When Does Pre-Training Help or Hurt?
+      </h2>
+
+      <p class="hero-subtitle">
+        An empirical investigation into representational distance, backbone topology, and layer-freezing dynamics across 
+        natural photos (<strong>CIFAR-10</strong>) and histopathological tissue tiles (<strong>PathMNIST</strong>) evaluated via Linear Centered Kernel Alignment (CKA).
+      </p>
+
+      <!-- Student Team Information Bar -->
+      <div class="team-pill-bar">
+        <div class="team-pill">
+          <span>Student Team:</span>
+        </div>
+        <div class="team-pill">
+          <strong>24CS129</strong> Narendran R
+        </div>
+        <div class="team-pill">
+          <strong>24CS130</strong> Navaneethan K
+        </div>
+        <div class="team-pill">
+          <strong>24CS131</strong> Naveen S (Lead)
+        </div>
+        <div class="team-pill">
+          <strong>24CS132</strong> Naveena R
+        </div>
+        <div class="team-pill">
+          <strong>24CS134</strong> Nethara G
+        </div>
+        <div class="team-pill">
+          <span>Supervisor:</span> <strong>Mr. T. Munirathinam</strong>
+        </div>
+      </div>
+
+      <!-- KPI Metric Cards Grid -->
+      <div class="kpi-grid">
+        <div class="kpi-card" style="--card-accent: #6366f1;">
+          <div class="kpi-card-header">
+            <span class="kpi-label">Configurations</span>
+            <div class="kpi-icon">&#9874;</div>
+          </div>
+          <div class="kpi-value">24 / 24</div>
+          <div class="kpi-subtext">
+            <span class="kpi-tag success">100% COMPLETE</span>
+            <span>2 Domains &times; 3 Nets &times; 4 Strats</span>
+          </div>
+        </div>
+
+        <div class="kpi-card" style="--card-accent: #10b981;">
+          <div class="kpi-card-header">
+            <span class="kpi-label">Top Near-Domain Acc</span>
+            <div class="kpi-icon">&#9733;</div>
+          </div>
+          <div class="kpi-value">70.67%</div>
+          <div class="kpi-subtext">
+            <span class="kpi-tag success">CIFAR-10</span>
+            <span>ResNet-50 Full Fine-Tune</span>
+          </div>
+        </div>
+
+        <div class="kpi-card" style="--card-accent: #f59e0b;">
+          <div class="kpi-card-header">
+            <span class="kpi-label">Top Far-Domain Acc</span>
+            <div class="kpi-icon">&#9875;</div>
+          </div>
+          <div class="kpi-value">64.67%</div>
+          <div class="kpi-subtext">
+            <span class="kpi-tag warning">PathMNIST</span>
+            <span>ResNet-50 Partial Fine-Tune</span>
+          </div>
+        </div>
+
+        <div class="kpi-card" style="--card-accent: #8b5cf6;">
+          <div class="kpi-card-header">
+            <span class="kpi-label">Max Transfer Gain</span>
+            <div class="kpi-icon">&#8679;</div>
+          </div>
+          <div class="kpi-value">+56.00%</div>
+          <div class="kpi-subtext">
+            <span class="kpi-tag info">&Delta; TRANSFER</span>
+            <span>vs. Random Scratch Baseline</span>
+          </div>
+        </div>
+
+        <div class="kpi-card" style="--card-accent: #06b6d4;">
+          <div class="kpi-card-header">
+            <span class="kpi-label">Fastest Adaptation</span>
+            <div class="kpi-icon">&#9201;</div>
+          </div>
+          <div class="kpi-value">10.6s</div>
+          <div class="kpi-subtext">
+            <span class="kpi-tag info">PER EPOCH</span>
+            <span>MobileNet-V2 Feature Ext.</span>
+          </div>
+        </div>
+
+        <div class="kpi-card" style="--card-accent: #ec4899;">
+          <div class="kpi-card-header">
+            <span class="kpi-label">CKA Drift Range</span>
+            <div class="kpi-icon">&#8776;</div>
+          </div>
+          <div class="kpi-value">0.94 &rarr; 0.48</div>
+          <div class="kpi-subtext">
+            <span class="kpi-tag info">SIMILARITY</span>
+            <span>Stage 1 (Frozen) vs Stage 4 (Drift)</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         Interactive Filter Panel
+         ======================================================================== -->
+    <section class="filter-panel">
+      <div class="filter-group-container">
+        <!-- Dataset Filter -->
+        <div class="filter-group">
+          <span class="filter-label">Domain Scope:</span>
+          <div class="segmented-control" role="group">
+            <button class="segment-btn active" data-group="dataset" data-value="all">All Domains</button>
+            <button class="segment-btn" data-group="dataset" data-value="cifar10">CIFAR-10 (Near)</button>
+            <button class="segment-btn" data-group="dataset" data-value="pathmnist">PathMNIST (Far)</button>
+          </div>
+        </div>
+
+        <!-- Metric Selector -->
+        <div class="filter-group">
+          <span class="filter-label">Evaluation Metric:</span>
+          <div class="segmented-control" role="group">
+            <button class="segment-btn active" data-group="metric" data-value="accuracy">Top-1 Accuracy (%)</button>
+            <button class="segment-btn" data-group="metric" data-value="f1">Macro-F1 Score</button>
+            <button class="segment-btn" data-group="metric" data-value="time">Epoch Time (sec)</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <button class="btn btn-secondary" id="exportCsvBtn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          Export CSV
+        </button>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         Main Analytics Charts Grid
+         ======================================================================== -->
+    <section class="chart-grid" id="benchmark-charts">
+      <!-- Primary Grouped Comparison Chart -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title-group">
+            <h3>Empirical Adaptation Benchmark</h3>
+            <p>Direct performance comparison across Random Scratch, Feature Extraction, Partial, and Full Fine-Tuning</p>
+          </div>
+        </div>
+        <div class="chart-container">
+          <canvas id="mainBenchmarkChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Transfer Gap Delta Chart -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title-group">
+            <h3>Transfer Learning Delta Margin (&Delta;)</h3>
+            <p>&Delta; = Accuracy(Transfer) &minus; Accuracy(Scratch Baseline)</p>
+          </div>
+        </div>
+        <div class="chart-container">
+          <canvas id="deltaChart"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         CKA Representation Similarity & Drift Analysis
+         ======================================================================== -->
+    <section class="cka-explorer-section" id="cka-drift">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title-group">
+            <h3>Linear CKA Representational Drift & Similarity Analysis</h3>
+            <p>Centered Kernel Alignment across network stages: Pretrained ImageNet representations vs Adapted feature spaces</p>
+          </div>
+          <button class="btn btn-secondary" onclick="openDiagramModal('cka_heatmap')">
+            View Empirical Heatmap
+          </button>
+        </div>
+
+        <div class="cka-grid">
+          <div class="chart-container-sm">
+            <canvas id="ckaDriftChart"></canvas>
+          </div>
+
+          <!-- Layer Drift Summary Table -->
+          <div>
+            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.75rem; line-height: 1.6;">
+              <strong>Key Finding:</strong> Early convolutional stages preserve foundational Gabor-like filters (CKA &gt; 0.90) across both domains. In far-domain histopathology, deeper layers experience substantial semantic drift (CKA drops to 0.482), explaining why <em>Partial Fine-Tuning</em> outperforms Full Fine-Tuning by protecting lower representations from gradient distortion.
+            </p>
+
+            <table class="matrix-table">
+              <thead>
+                <tr>
+                  <th>Stage</th>
+                  <th>Feature Scope</th>
+                  <th>CIFAR-10 CKA</th>
+                  <th>PathMNIST CKA</th>
+                  <th>Scratch CKA</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Stage 1</strong></td>
+                  <td>Edges & Low-level Textures</td>
+                  <td><div class="matrix-cell" style="background: rgba(16, 185, 129, 0.25); color: #10b981;">0.942<span class="sub">Preserved</span></div></td>
+                  <td><div class="matrix-cell" style="background: rgba(16, 185, 129, 0.2); color: #10b981;">0.918<span class="sub">Preserved</span></div></td>
+                  <td><div class="matrix-cell" style="background: rgba(239, 68, 68, 0.15); color: #ef4444;">0.048<span class="sub">Orthogonal</span></div></td>
+                </tr>
+                <tr>
+                  <td><strong>Stage 2</strong></td>
+                  <td>Motifs & Combinations</td>
+                  <td><div class="matrix-cell" style="background: rgba(16, 185, 129, 0.2); color: #10b981;">0.887<span class="sub">High</span></div></td>
+                  <td><div class="matrix-cell" style="background: rgba(245, 158, 11, 0.2); color: #f59e0b;">0.781<span class="sub">Moderate</span></div></td>
+                  <td><div class="matrix-cell" style="background: rgba(239, 68, 68, 0.15); color: #ef4444;">0.052<span class="sub">Orthogonal</span></div></td>
+                </tr>
+                <tr>
+                  <td><strong>Stage 3</strong></td>
+                  <td>Mid-level Semantic Parts</td>
+                  <td><div class="matrix-cell" style="background: rgba(59, 130, 246, 0.2); color: #3b82f6;">0.764<span class="sub">Moderate</span></div></td>
+                  <td><div class="matrix-cell" style="background: rgba(245, 158, 11, 0.25); color: #f59e0b;">0.584<span class="sub">Divergent</span></div></td>
+                  <td><div class="matrix-cell" style="background: rgba(239, 68, 68, 0.15); color: #ef4444;">0.071<span class="sub">Orthogonal</span></div></td>
+                </tr>
+                <tr>
+                  <td><strong>Stage 4</strong></td>
+                  <td>Task Semantic Representations</td>
+                  <td><div class="matrix-cell" style="background: rgba(139, 92, 246, 0.2); color: #8b5cf6;">0.685<span class="sub">Adapted</span></div></td>
+                  <td><div class="matrix-cell" style="background: rgba(239, 68, 68, 0.25); color: #ef4444;">0.482<span class="sub">Heavy Drift</span></div></td>
+                  <td><div class="matrix-cell" style="background: rgba(239, 68, 68, 0.15); color: #ef4444;">0.064<span class="sub">Orthogonal</span></div></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         Sortable & Searchable Benchmark Matrix Data Table
+         ======================================================================== -->
+    <section class="table-section" id="comparison-table">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title-group">
+            <h3>Full Benchmark Experimental Matrix (24 Runs)</h3>
+            <p>Comprehensive quantitative results across all datasets, architectures, and layer freezing strategies</p>
+          </div>
+        </div>
+
+        <div class="table-toolbar">
+          <div class="search-box">
+            <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" id="tableSearchInput" placeholder="Filter by model, dataset, or strategy...">
+          </div>
+
+          <div style="font-size: 0.8rem; color: var(--text-muted);">
+            Tip: Click on column headers to sort ascending / descending
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th data-sort="model">Architecture</th>
+                <th data-sort="dataset">Domain</th>
+                <th data-sort="strategy">Adaptation Strategy</th>
+                <th data-sort="accuracy" class="sorted-desc">Top-1 Accuracy</th>
+                <th data-sort="delta">&Delta; vs Scratch</th>
+                <th data-sort="f1">Macro-F1</th>
+                <th data-sort="avg_epoch_time">Epoch Latency</th>
+                <th data-sort="trainable_params">Trainable Params</th>
+                <th data-sort="total_params">Total Params</th>
+              </tr>
+            </thead>
+            <tbody id="benchmarkTableBody">
+              <!-- Dynamically populated by dashboard.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         Interactive Strategy Decision Recommendation Calculator
+         ======================================================================== -->
+    <section class="wizard-section" id="decision-wizard">
+      <div class="wizard-card">
+        <div class="card-header">
+          <div class="card-title-group">
+            <h3>Practitioner Adaptation Strategy Calculator</h3>
+            <p>Input your operational target constraints to receive an optimal transfer recommendation grounded in our empirical findings</p>
+          </div>
+          <button class="btn btn-secondary" onclick="openDiagramModal('fig6_1')">
+            View Decision Tree
+          </button>
+        </div>
+
+        <div class="wizard-grid">
+          <!-- Selection Controls -->
+          <div class="wizard-inputs">
+            <div class="wizard-field">
+              <label for="wizDomain">Target Domain Proximity to ImageNet</label>
+              <select id="wizDomain" class="wizard-select">
+                <option value="near">Near-Domain (Natural Photographic Objects like CIFAR-10)</option>
+                <option value="far" selected>Far-Domain / OOD (Histopathology, Radiography, MedMNIST)</option>
+              </select>
+            </div>
+
+            <div class="wizard-field">
+              <label for="wizSampleSize">Target Training Set Volume</label>
+              <select id="wizSampleSize" class="wizard-select">
+                <option value="small">Small (&lt; 2,000 samples per class)</option>
+                <option value="medium" selected>Moderate (2,000 &ndash; 15,000 samples)</option>
+                <option value="large">High Capacity (&gt; 15,000 samples)</option>
+              </select>
+            </div>
+
+            <div class="wizard-field">
+              <label for="wizCompute">Compute Budget & Latency Tolerance</label>
+              <select id="wizCompute" class="wizard-select">
+                <option value="standard" selected>Standard Training Budget (Server GPU)</option>
+                <option value="low">Constrained / Edge Compute (&lt; 15s/epoch limit)</option>
+                <option value="high">High Performance / Cluster Scale</option>
+              </select>
+            </div>
+
+            <div class="wizard-field">
+              <label for="wizParams">Deployable Parameter Constraints</label>
+              <select id="wizParams" class="wizard-select">
+                <option value="standard" selected>Standard Model Footprint (&le; 25M Params)</option>
+                <option value="edge">Edge Device / Mobile Constrained (&le; 5M Params)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Dynamic Output Recommendation Box -->
+          <div class="wizard-result-box">
+            <span style="font-size: 0.72rem; text-transform: uppercase; color: var(--brand-primary-light); font-weight: 700; letter-spacing: 0.08em;">Recommended Adaptation Topology</span>
+            <h4 class="wizard-rec-title" id="wizRecTitle">Partial Fine-Tuning (Stage 3 & 4)</h4>
+            <p class="wizard-rec-desc" id="wizRecDesc">
+              Loading empirical recommendation...
+            </p>
+
+            <ul class="wizard-metric-list">
+              <li class="wizard-metric-item">
+                <span class="title">Recommended Backbone</span>
+                <span class="val" id="wizRecModel">ResNet-50</span>
+              </li>
+              <li class="wizard-metric-item">
+                <span class="title">Expected Top-1 Acc</span>
+                <span class="val" id="wizExpectedAcc">64.67%</span>
+              </li>
+              <li class="wizard-metric-item">
+                <span class="title">CKA Preservation</span>
+                <span class="val" id="wizCkaPreserve">0.781 (Stage 2)</span>
+              </li>
+              <li class="wizard-metric-item">
+                <span class="title">Training Latency</span>
+                <span class="val" id="wizSpeed">34.6s / epoch</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         Architecture & Methodology Diagram Gallery
+         ======================================================================== -->
+    <section class="gallery-section" id="diagrams-gallery">
+      <div class="card-header">
+        <div class="card-title-group">
+          <h3>Methodology & System Architecture Gallery</h3>
+          <p>Click any visual diagram to inspect the high-resolution vector and empirical artifact modal</p>
+        </div>
+      </div>
+
+      <div class="gallery-grid">
+        <!-- Card 1 -->
+        <div class="gallery-card" data-diagram="fig3_1">
+          <div class="gallery-img-wrapper">
+            <img src="report_assets/fig3_1_methodology_flowchart.png" alt="Figure 3.1 Flowchart" loading="lazy">
+          </div>
+          <div class="gallery-info">
+            <h4>Fig 3.1: Methodology Flowchart</h4>
+            <p>7-stage reproducible experimental pipeline from dataset ingestion to forward hooking.</p>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="gallery-card" data-diagram="fig4_0">
+          <div class="gallery-img-wrapper">
+            <img src="report_assets/fig4_0_dataset_domains.png" alt="Figure 4.0 Datasets" loading="lazy">
+          </div>
+          <div class="gallery-info">
+            <h4>Fig 4.0: Cross-Domain Spectral Density</h4>
+            <p>CIFAR-10 vs PathMNIST RGB channel histograms and patch divergences.</p>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="gallery-card" data-diagram="fig4_1">
+          <div class="gallery-img-wrapper">
+            <img src="report_assets/fig4_1_system_architecture.png" alt="Figure 4.1 System Architecture" loading="lazy">
+          </div>
+          <div class="gallery-info">
+            <h4>Fig 4.1: Global System Architecture</h4>
+            <p>Tri-panel pipeline: Ingestion, Model Strategy Dispatcher, and Linear CKA Metric Engine.</p>
+          </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="gallery-card" data-diagram="fig4_2">
+          <div class="gallery-img-wrapper">
+            <img src="report_assets/fig4_2_adaptation_strategies.png" alt="Figure 4.2 Strategies" loading="lazy">
+          </div>
+          <div class="gallery-info">
+            <h4>Fig 4.2: Four Adaptation Topologies</h4>
+            <p>Layer freezing schematics for Scratch, Feature Extraction, Partial, and Full Fine-Tuning.</p>
+          </div>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="gallery-card" data-diagram="fig4_3">
+          <div class="gallery-img-wrapper">
+            <img src="report_assets/fig4_3_cka_pipeline.png" alt="Figure 4.3 CKA Pipeline" loading="lazy">
+          </div>
+          <div class="gallery-info">
+            <h4>Fig 4.3: Linear CKA Mathematical Derivation</h4>
+            <p>Gram matrix formulation, centering operator H, and normalized HSIC inner product.</p>
+          </div>
+        </div>
+
+        <!-- Card 6 -->
+        <div class="gallery-card" data-diagram="fig4_4">
+          <div class="gallery-img-wrapper">
+            <img src="report_assets/fig4_4_backbone_comparison.png" alt="Figure 4.4 Backbones" loading="lazy">
+          </div>
+          <div class="gallery-info">
+            <h4>Fig 4.4: Micro-Architectural Blocks</h4>
+            <p>ResNet Bottleneck vs EfficientNet MBConv vs MobileNet Inverted Residual block.</p>
+          </div>
+        </div>
+
+        <!-- Card 7 -->
+        <div class="gallery-card" data-diagram="fig6_1">
+          <div class="gallery-img-wrapper">
+            <img src="report_assets/fig6_1_decision_flowchart.png" alt="Figure 6.1 Decision Flowchart" loading="lazy">
+          </div>
+          <div class="gallery-info">
+            <h4>Fig 6.1: Engineering Decision Tree</h4>
+            <p>Algorithmic decision tree for selecting transfer learning strategies under constraints.</p>
+          </div>
+        </div>
+
+        <!-- Card 8 -->
+        <div class="gallery-card" data-diagram="cka_heatmap">
+          <div class="gallery-img-wrapper">
+            <img src="results/cka_heatmap.png" alt="Figure 5.3 CKA Heatmap" loading="lazy">
+          </div>
+          <div class="gallery-info">
+            <h4>Fig 5.3: Empirical CKA Heatmap</h4>
+            <p>Representational similarity heatmaps validating representation preservation vs drift.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ========================================================================
+       Diagram Lightbox Modal
+       ======================================================================== -->
+  <div class="modal-overlay" id="diagramModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="modalTitle" style="font-size: 1.1rem;">Diagram Title</h3>
+        <button class="btn-icon" id="modalCloseBtn" aria-label="Close modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <img id="modalImg" src="" alt="">
+        <p class="modal-caption" id="modalCaption"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       Footer
+       ======================================================================== -->
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div>
+        <h4 style="font-size: 1rem; margin-bottom: 0.35rem;">Department of Computer Science and Engineering</h4>
+        <p class="footer-copy">KPR Institute of Engineering and Technology (Autonomous), Arasur, Coimbatore &ndash; 641 407</p>
+        <p class="footer-copy">Affiliated to Anna University, Chennai &bull; Course Code: U21CS503 Computer Vision</p>
+      </div>
+
+      <div class="footer-links">
+        <a href="CV_PROJECT_REPORT.pdf" target="_blank" class="footer-link">Download 34-Page Report PDF</a>
+        <a href="https://github.com/MR-Naveen-S/Computer-Vision-Project" target="_blank" class="footer-link">GitHub Repository</a>
+        <a href="results/benchmark_summary.csv" download class="footer-link">Raw Results CSV</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Dashboard JavaScript Engine -->
+  <script src="dashboard.js"></script>
+</body>
+</html>
